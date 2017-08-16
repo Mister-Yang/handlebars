@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<title>handlebars</title>
+		<style type="text/css">
+			.noscroll,
+			.noscroll body {
+				overflow: hidden;
+			}
+			.noscroll body {
+				position: relative;
+			}
+		</style>
+		<script id="class-template" type="text/x-handlebars-template">
+			<ul>
+				{{#each this}}
+				<li data-id="{{id}}">
+					<div class="innerbox">
+						<img src="{{image}}" alt="{{title}}" />
+					</div>
+					<div class="titlediv">
+						<span class="title">{{title}}</span> {{#equal hasnote 1}}
+						<span class="note">(有笔记)</span> {{/equal}}
+					</div>
+					<div class="subtitle">{{subtitle}}</div>
+					<div class="subtitle {{#long timespan}} long {{else}} short {{/long}}">时间：{{timespan}}</div>
+				</li>
+				{{/each}}
+			</ul>
+		</script>
+		<script id="pag-template" type="text/x-handlebars-template">
+			<ul>
+				{{#each this}}
+				<li data-id={{index}} {{#if cur}} class="cur" {{/if}} {{#if clickable}} class="clickable" {{/if}}>
+					{{{text}}}
+				</li>
+				{{/each}}
+			</ul>
+		</script>
+		<script id="chapter-template" type="text/x-handlebars-template">
+			<ul class="titleul">
+				{{#each this}}
+				<li class="titleli">
+					<div class="title">{{addone @index}}、{{title}}</div>
+					<ul>
+						{{#each subTitle}}
+						<li class="subtitle">
+							{{addone @../index}}-{{addone @index}}、
+							<a href="http://wwww.imooc.com/{{titletype}}/{{mid}}" target="_blank">{{title}}</a>
+							{{#if timespan}}<span class="time">({{timespan}})</span>{{/if}} {{#equal titletype 'code'}}
+							<span class="type">(编程)</span> {{else}} {{#equal titletype 'ceping'}}
+							<span class="type">(练习)</span> {{/equal}} {{/equal}}
+						</li>
+						{{/each}}
+					</ul>
+				</li>
+				{{/each}}
+			</ul>
+		</script>
+		<script id="note-template" type="text/x-handlebars-template">
+			<ul class="noteul">
+				{{#each this}}
+				<li>
+					<div class="time">{{formatDate notetime}}</div>
+					<div class="content">{{{content}}}</div>
+				</li>
+				{{/each}}
+			</ul>
+		</script>
+	</head>
+
+	<body>
+		<div class="banner">
+			<h1>我的笔记本</h1>
+			<h1>你的指尖，有改变世界的力量</h1>
+		</div>
+
+		<div class="classes" id="classes">
+
+		</div>
+		<div class="pag" id="pag">
+
+		</div>
+		<div class="overlap"></div>
+		<div class="notedetail">
+			<div class="chapterdiv" id="chapterdiv">
+
+			</div>
+			<div class="notemiddle"></div>
+			<div class="notediv" id="notediv">
+
+			</div>
+		</div>
+		<div id="foo">
+
+		</div>
+	</body>
+
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/handlebars-v4.0.10.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/script.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/spin.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//添加预加载图标
+		$(function() {
+
+			var opts = {
+
+				lines: 9, // The number of lines to draw
+
+				length: 0, // The length of each line
+
+				width: 10, // The line thickness
+
+				radius: 15, // The radius of the inner circle
+
+				corners: 1, // Corner roundness (0..1)
+
+				rotate: 0, // The rotation offset
+
+				color: '#000', // #rgb or #rrggbb
+
+				speed: 1, // Rounds per second
+
+				trail: 60, // Afterglow percentage
+
+				shadow: false, // Whether to render a shadow
+
+				hwaccel: false, // Whether to use hardware acceleration
+
+				className: 'spinner', // The CSS class to assign to the spinner
+
+				zIndex: 2e9, // The z-index (defaults to 2000000000)
+
+				top: 'auto', // Top position relative to parent in px
+
+				left: 'auto' // Left position relative to parent in px
+
+			};
+
+			var target = document.getElementById('foo');
+			var spinner = new Spinner(opts).spin(target);
+		})
+		$(".classes").on('click','li',function(){
+			$('html').addClass('noscroll');
+		})
+		$(".banner h1").on('click',function(){
+			$('html').removeClass('noscroll');
+		})
+	</script>
+
+</html>
